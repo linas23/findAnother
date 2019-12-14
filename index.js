@@ -34,7 +34,11 @@ new Vue({
         winner:'',
         showchangename:true,
         notvalid:false,
-
+        remainingBoxes:20,
+        music:{},
+        musicfile:'https://www.televisiontunes.com/uploads/audio/Game%20of%20Thrones.mp3',
+        clicksoundsrc:'/audio/click.mp3',
+        GOT:true,
        /*  styleObject: {
             color: 'red',
             fontSize: '13px',
@@ -43,19 +47,40 @@ new Vue({
 
     },
     methods:{
+        form1(){
+            this.showform = ! this.showform;
+            this.clickaudio();
+        },
+        form2(){
+            this.showform2 = ! this.showform2;
+            this.clickaudio();
+        },
         changeNamep1(){
             console.log(this.changedPlayerName);
+            this.clickaudio();
             this.names[0]= this.changedPlayerName;
-            this.changedPlayerName= '';
             this.showform=false;
+
+            if(this.changedPlayerName.length==0){
+                this.names[0]='linas';
+            }
+
+            this.changedPlayerName= '';
         },
         changeNamep2(){  
             console.log(this.changedPlayerName);
+            this.clickaudio();
             this.names[1]= this.changedPlayerName;
-            this.changedPlayerName= '';
             this.showform2=false;
+
+            if(this.changedPlayerName.length==0){
+                this.names[1]='urshala';
+            }
+
+            this.changedPlayerName= '';
         },
         startGame(){
+            this.clickaudio();
             this.gameIsOn= false;
             this.gameStart = true;
             this.showhome=true;
@@ -91,6 +116,7 @@ new Vue({
             // console.log(this.selections);
         },
         restartGame(){
+            this.clickaudio();
             this.gameIsOn=true;
             this.arr1=[];
             this.arr2=[];
@@ -111,11 +137,13 @@ new Vue({
             this.time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;  
         },
         home(){
+            this.clickaudio();
             this.gameIsOn=true;
             this.gameStart=false;
             this.showhome=false;
             this.winningScreen=false;
             this.showdetails=false;
+            this.showchangename=true;
             this.p1points=0;
             this.p2points=0;
             this.p1turn=false;
@@ -147,8 +175,8 @@ new Vue({
             /* this.selections[index].style= {
                 opacity:1
             } */
-
-            var selected = '';
+            this.clickaudio();
+            // var selected = '';
             var clickedvalue=this.selections[index];
             if(this.p2active){
                 // console.log(`p2 is active.`);
@@ -183,13 +211,12 @@ new Vue({
                         this.totalclick=1;
                     }else{
                         console.log('it is accepted.');
+                        this.remainingBoxes -= 2;
                         this.p2points += 10;
                         this.removeitems();
                     }
                 }
-                if(this.selections.length == 0){
-                    this.showWinner();
-                }
+                this.gamefinish();
                 /* changing the turns */
                 if(this.totalclick==2){
                     // console.log('total click is 2 now');
@@ -228,13 +255,12 @@ new Vue({
                         this.totalclick = 1 ;
                     }else{
                         console.log('it is accepted.');
+                        this.remainingBoxes -=2;
                         this.p1points += 10;
                         this.removeitems();
                     }
                 }
-                if(this.selections.length == 0){
-                    this.showWinner();
-                }
+                this.gamefinish();
                 /* changing the turns */
                 if(this.totalclick==2){
                     console.log('total click is 2 now');
@@ -250,6 +276,7 @@ new Vue({
                     this.p1active=false;
                     this.toremove=[];
                 }
+                console.log(this.remainingBoxes);
             }
         },
         validate(){
@@ -262,7 +289,8 @@ new Vue({
             for(var i = 0; i<this.toremove.length ; i++){
                 console.log(`removing index ${this.toremove[i]}`);
                 // console.log(this.selections);
-                this.selections.splice(this.toremove[i],1);
+                // this.selections.splice(this.toremove[i],1);
+                this.selections[this.toremove[i]]= ' ';
                 // console.log(this.selections);
             }
         },
@@ -282,13 +310,47 @@ new Vue({
             }
         },
         backToGame(){
+            this.clickaudio();
             this.notvalid=false;
             this.gameStart=true;
-        }
+        },
+        gamefinish(){
+            if(this.remainingBoxes == 0){
+                this.showWinner();
+            }
+        },
+        startmusic(){
+            this.music = new Audio();
+            this.music.src=this.musicfile;
+            this.music.volume=0.11;
+            console.log(this.music);
+        },
+        clickaudio(){
+            var click= new Audio();
+            click.src=this.clicksoundsrc;
+            click.play();
+        },
+        turnoff(){
+            this.GOT = !this.GOT;
+            this.music.pause();
+            console.log('music is off');
+        },
+        turnon(){
+            this.startmusic();
+            this.GOT = !this.GOT;
+            // this.music.play();
+            this.music.loop=true;
+            this.music.autoplay=true;
+            console.log('music is on');
+        },
         },
         created(){
             setInterval(() => {
                 this.currentTime();
             }, 100);
-        }
-})
+           /*  setTimeout(() => {
+                this.startmusic();    
+            }, 800); */
+        },
+        
+    })

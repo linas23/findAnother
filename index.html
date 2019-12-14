@@ -8,9 +8,9 @@
     <link href="https://fonts.googleapis.com/css?family=Mansalva&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lakki+Reddy&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Kalam:400,700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="/index.css">
+    <script src="https://kit.fontawesome.com/427e69b628.js"></script>
     <script src="./vue.js/js/vue.js"></script>
+    <link rel="stylesheet" href="/index.css">
 </head>
 <body>
 
@@ -21,7 +21,7 @@
                         {{names[0].toUpperCase()}}
                     </div>
                     <div class="namechanging" v-if="showchangename" >
-                        <input type="button" class= "btn" @click="showform = !showform" value="Change Name">
+                        <input type="button" class= "btn" @click="form1" value="Change Name">
                         <div class="form" v-if="showform">
                             <input type="text" v-model="changedPlayerName">
                             <input type="submit"  @click="changeNamep1" value="Done">
@@ -63,7 +63,7 @@
                         <!-- v-bind:style="styleObject" -->
                         <div class="choose" @click="selected(index)" :key="index">
                             <div>
-                                {{select}}
+                                <li >{{select.toUpperCase()}}</li>
                             </div>
                         </div>
                     </div>
@@ -86,6 +86,10 @@
                         <div class="currenttime">
                             {{time}}
                         </div>
+                        <div class="musicbutton">
+                            <button @click="turnon" v-if="GOT" >music : on</button>
+                            <button @click="turnoff" v-else>music : off</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,7 +98,7 @@
                     {{names[1].toUpperCase()}}
                 </div>
                 <div class="namechanging" v-if="showchangename">      
-                    <input type="button" class="btn" @click="showform2 = !showform2" value="Change Name">
+                    <input type="button" class="btn" @click="form2" value="Change Name">
                     <div class="form" v-if="showform2">
                         <input type="text" v-model="changedPlayerName">
                         <input type="submit" @click="changeNamep2" value="Done">
