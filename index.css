@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css?family=Black+Ops+One&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great|Rye&display=swap');
+*{
+    margin: 0;
+    padding:0;
+}
+body{
+    background: linear-gradient(to right, #23074d, #cc5333);
+}
+.container{
+    margin: 0 auto;
+    width: 95%;
+    margin-top: 10vh;
+    /* background: teal; */
+    height: 600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.players{
+    background: linear-gradient(to top, #0b486b, #f56217);
+    min-width: 20%;
+    text-align: center;
+    padding: 20px;
+    font-size: 2rem;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+}
+.playboard{
+    /* padding: 20px; */
+    width: 100%;
+    /* border: 1px solid white; */
+}
+.players .details{
+    margin-top: 40px;
+}
+.title{
+    height: 4vh;
+    text-align: center;
+    font-size: 1.5rem;
+    font-family: 'Rye', cursive;
+    /* text-decoration: underline; */
+    padding: 10px;
+    letter-spacing: 0.4rem;
+    background: linear-gradient(to top, #000428, #004e92);
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.title button{
+    font-family: 'Rye', cursive;
+    width: 75px;
+    color: black;
+    font-weight: 700;
+    letter-spacing: 0.2rem;
+}
+.selection{
+    background: linear-gradient(to bottom, #8e0e00, #1f1c18);
+    width: 100%;
+    height: 550px;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    grid-template-rows: repeat(4,1fr);
+    overflow: hidden;
+}
+.selection .box{
+    height: 100px;
+    width: 100px;
+    background: linear-gradient(to right, #8e9eab, #eef2f3);
+    margin: 20px 10px 5px 30px;
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    position:relative;
+}
+.selectedbox{
+    height: 300px ;
+    width: 80%;
+    background: linear-gradient(to right, #8e9eab, #eef2f3);
+    margin: 20px 10px 5px 30px;
+    text-align: center;
+    font-family: 'Reenie Beanie', cursive;
+}
+.name {
+    border-bottom: 1px dashed white;
+    color: white;
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 3.3rem;
+}
+.selected span{
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Black Ops One', cursive;
+    letter-spacing: 0.4rem;
+}
+.btn{
+    font-family: 'Kalam', cursive;
+    width: 100px;
+}
+.points{
+    font-family: 'Fredericka the Great', cursive;
+    font-size: 2.2rem;
+    color: black;
+    font-weight: 800;
+    letter-spacing: 0.2rem;
+}
+.box .choose{
+    height: 100%;
+    width: 100%;
+    padding-top: 35px;
+    /* opacity: 1; */
+    /* position: fixed; */
+}
+.box .choose:hover{
+    cursor: pointer;
+}
+.selectedbox .chosenone{
+    font-family: 'Press Start 2P', cursive;
+    color: black;
+    font-size: 2rem;
+    padding-top: 125px;
+    letter-spacing: 0.3rem;
+}
+.description{
+    margin: 0 auto;
+    width: 75%;
+    text-align: center;
+    margin-top: 20%;
+    font-size: 2rem;
+    font-family: 'Lakki Reddy', cursive;
+}
+.start button{
+    width: 100px;
+}
+.timer input{
+    width: 35px;
+    border: none;
+    background: inherit;
+    color: white;
+    margin: 0;
+    font-size: inherit;
+    /* padding-left: 5px; */
+    padding: 0;
+    text-align: center;
+}
+.winner{
+    font-size: 2.3rem;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    text-transform: uppercase;
+    background: inherit;
+    margin: 0 auto;
+    width: 80%;
+    margin-top: 25%;
+}
+.winner span{
+    text-decoration: underline;
+    text-decoration-style: wavy ;
+}
+.notvalid{
+    margin: 0 auto;
+    width: 75%;
+    text-align: center;
+    margin-top: 20%;
+    font-size: 2rem;
+    font-family: 'Lakki Reddy', cursive;
+    color: white;
+
+}
+.notvalid button{
+    font-family: 'Lakki Reddy', cursive;
+    width: 125px;
+    height: 30px;
+    background: inherit;
+    color: white;
+}

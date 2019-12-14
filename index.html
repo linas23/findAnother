@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Find Another</title>
+    <link href="https://fonts.googleapis.com/css?family=Mansalva&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lakki+Reddy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kalam:400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/index.css">
+    <script src="./vue.js/js/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <div class="container">
+            <div class="players">
+                    <div class="name">
+                        {{names[0].toUpperCase()}}
+                    </div>
+                    <div class="namechanging" v-if="showchangename" >
+                        <input type="button" class= "btn" @click="showform = !showform" value="Change Name">
+                        <div class="form" v-if="showform">
+                            <input type="text" v-model="changedPlayerName">
+                            <input type="submit"  @click="changeNamep1" value="Done">
+                        </div>
+                    </div> 
+                    <div class="details" v-if="showdetails">
+                        <div class="points">
+                            Point:{{p1points}}
+                        </div>
+                        <div class="selected" v-if="selectbox">
+                            <span v-if="p1turn"> your turn</span><br>
+                            <span>Your selection</span>
+                                <div class="selectedbox">
+                                        <div class="chosenone" >
+                                            {{p1selection}}
+                                            <!-- <input type="text" v-model="p1selection"> -->
+                                        </div>
+                                </div>
+                        </div>          
+                    </div>
+                    
+            </div>
+            <div class="playboard">
+                <div class="title">
+                    <div class="main">
+                        hello play board
+                    </div>
+                    <div class="timer" v-if="gameStart">
+                        <input type="text" v-model="min">:<input type="text" v-model="sec">:<input type="text" v-model="ms">
+                    </div>
+                    <div class="start">
+                        <button @click="home" v-if="showhome">Home</button>
+                        <button @click="startGame"v-if="gameIsOn">Start</button>
+                        <button @click="restartGame" v-else>Re-start</button>
+                    </div>
+                </div>
+                <div class="selection" v-if="gameStart">
+                    <div class="box" v-for="(select,index) in selections">
+                        <!-- v-bind:style="styleObject" -->
+                        <div class="choose" @click="selected(index)" :key="index">
+                            <div>
+                                {{select}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="winner" v-else-if="winningScreen">
+                    <span>
+                        the winner is <br><div v-html="winner"> </div>
+                    </span>
+                </div>
+                <div class="notvalid" v-else-if="notvalid">
+                    You are trying to cheat in this game. <br>
+                    <button @click="backToGame">Back to Game</button>
+                </div>
+                <div v-else>
+                    <div class="description">
+                        Game has not been started yet. <br>
+                        Change the names of players if you wish. <br>
+                        Enjoy the Game <br>
+                        Click the button above to start the game.
+                        <div class="currenttime">
+                            {{time}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="players">  
+                <div class="name">
+                    {{names[1].toUpperCase()}}
+                </div>
+                <div class="namechanging" v-if="showchangename">      
+                    <input type="button" class="btn" @click="showform2 = !showform2" value="Change Name">
+                    <div class="form" v-if="showform2">
+                        <input type="text" v-model="changedPlayerName">
+                        <input type="submit" @click="changeNamep2" value="Done">
+                    </div>
+                </div>
+                <div class="details" v-if="showdetails">
+                    <div class="points">
+                            Point: {{p2points}}
+                    </div>
+                    <div class="selected" v-if="selectbox">
+                        <span v-if="p2turn"> your turn</span><br>
+                            <span>Your selection</span>
+                            <div class="selectedbox">
+                                    <div class="chosenone">
+                                            {{p2selection}}
+                                            <!-- <input type="text" v-model="p2selection"> -->
+                                    </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Reenie+Beanie&display=swap');
+</style>
+<script src="index.js"></script>
+</html>
