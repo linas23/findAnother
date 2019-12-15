@@ -30,12 +30,12 @@
                         <div class="points">
                             Point:{{p1points}}
                         </div>
-                        <div class="selected" v-if="selectbox">
+                        <div class="selected" v-if="selectbox" >
                             <span v-if="p1turn"> your turn</span><br>
                             <span>Your selection</span>
                                 <div class="selectedbox">
                                         <div class="chosenone" >
-                                            {{p1selection}}
+                                            {{p1selection.toUpperCase()}}
                                             <!-- <input type="text" v-model="p1selection"> -->
                                         </div>
                                 </div>
@@ -58,11 +58,11 @@
                     </div>
                 </div>
                 <div class="selection" v-if="gameStart">
-                    <div class="box" v-for="(select,index) in selections">
+                    <div class="box" v-bind:style="bindingStyle" v-for="(select,index) in selections" >
                         <!-- v-bind:style="styleObject" -->
                         <div class="choose" @click="selected(index)" :key="index">
                             <div>
-                                <li >{{select.toUpperCase()}}</li>
+                                <li>{{select.toUpperCase()}}</li>
                             </div>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                             <span>Your selection</span>
                             <div class="selectedbox">
                                     <div class="chosenone">
-                                            {{p2selection}}
+                                            {{p2selection.toUpperCase()}}
                                             <!-- <input type="text" v-model="p2selection"> -->
                                     </div>
                             </div>

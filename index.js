@@ -41,6 +41,13 @@ new Vue({
         GOT:true,
         sounds:['/audio/1.mp3','/audio/2.mp3',,'','/audio/3.mp3','/audio/4.mp3','/audio/5.mp3','/audio/6.mp3','/audio/7.mp3','/audio/8.mp3'], 
         conversation:{},
+        wrong:{},
+        thatswrong:'/audio/thatswrong.mp3',
+        right:{},
+        thatsright:'/audio/thatsright.mp3',
+        // visible:true,
+        li:[],
+        bindingStyle:'',
        /*  styleObject: {
             color: 'red',
             fontSize: '13px',
@@ -129,6 +136,9 @@ new Vue({
             this.gameStart=false;
             this.p2turn=false;
             this.startGame();
+            this.remainingBoxes=20;
+            this.showdetails=true;
+            this.selectbox=true;
             // setTimeout(() => {
                 // this.startTime();
                 // this.startms();
@@ -213,9 +223,20 @@ new Vue({
                         this.totalclick=1;
                     }else{
                         console.log('it is accepted.');
+                        this.rightaudio();
+                        this.hide(this.toremove[0],this.toremove[1]);
                         this.remainingBoxes -= 2;
                         this.p2points += 10;
                         this.removeitems();
+                    }
+                }
+                if(this.p2array.length==2){
+                    console.log(this.p2array);
+                    if(this.p2array[0]!=this.p2array[1]){
+                        console.log(this.p2array);
+                        this.wrong = new Audio();
+                        this.wrong.src=this.thatswrong;
+                        this.wrong.play();
                     }
                 }
                 this.gamefinish();
@@ -257,15 +278,24 @@ new Vue({
                         this.totalclick = 1 ;
                     }else{
                         console.log('it is accepted.');
+                        this.rightaudio();
+                        this.hide(this.toremove[0],this.toremove[1]);
                         this.remainingBoxes -=2;
                         this.p1points += 10;
                         this.removeitems();
                     }
                 }
+                if(this.p1array.length==2){
+                    if(this.p1array[0]!=this.p1array[1]){
+                        this.wrong = new Audio();
+                        this.wrong.src=this.thatswrong;
+                        this.wrong.play();
+                    }
+                }
                 this.gamefinish();
                 /* changing the turns */
                 if(this.totalclick==2){
-                    console.log('total click is 2 now');
+                    // console.log('total click is 2 now');
                     // checking whether both selection are equal or not
                     // console.log('it never reached here.');
                     this.totalclick=0;
@@ -278,7 +308,7 @@ new Vue({
                     this.p1active=false;
                     this.toremove=[];
                 }
-                console.log(this.remainingBoxes);
+                // console.log(this.remainingBoxes);
             }
         },
         validate(){
@@ -289,7 +319,7 @@ new Vue({
             this.toremove.sort((a,b)=> b - a);
             console.log(this.toremove);
             for(var i = 0; i<this.toremove.length ; i++){
-                console.log(`removing index ${this.toremove[i]}`);
+                // console.log(`removing index ${this.toremove[i]}`);
                 // console.log(this.selections);
                 // this.selections.splice(this.toremove[i],1);
                 this.selections[this.toremove[i]]= ' ';
@@ -325,7 +355,7 @@ new Vue({
         startmusic(){
             this.music = new Audio();
             this.music.src=this.musicfile;
-            this.music.volume=0.11;
+            this.music.volume=0.23;
             console.log(this.music);
         },
         clickaudio(){
@@ -347,7 +377,6 @@ new Vue({
             console.log('music is on');
         },
         conversations(){
-
             console.log('conversation should begin now.');
             /* this.conversation= new Audio();
             this.conversation.src=this.sounds[0];
@@ -362,7 +391,23 @@ new Vue({
                     }
                     i++;
                 }, 2500);
-            }
+            },
+        rightaudio(){
+            // that's right audio
+            this.right=new Audio();
+            this.right.src=this.thatsright;
+            this.right.play();
+        },
+        hide(a,b){
+            console.log(a);
+            console.log(b);
+            // console.log(this.li);
+            this.li.push(document.querySelectorAll(".box"));
+            // console.log(this.li);
+
+            // this.li[indexes[0]].style="background:inherit";
+            // this.li[indexes[1]].style="background:inherit";
+        }
         },
         created(){
             setInterval(() => {
