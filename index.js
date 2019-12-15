@@ -39,6 +39,8 @@ new Vue({
         musicfile:'https://www.televisiontunes.com/uploads/audio/Game%20of%20Thrones.mp3',
         clicksoundsrc:'/audio/click.mp3',
         GOT:true,
+        sounds:['/audio/1.mp3','/audio/2.mp3',,'','/audio/3.mp3','/audio/4.mp3','/audio/5.mp3','/audio/6.mp3','/audio/7.mp3','/audio/8.mp3'], 
+        conversation:{},
        /*  styleObject: {
             color: 'red',
             fontSize: '13px',
@@ -308,6 +310,7 @@ new Vue({
             }else{
                 this.winner= this.names[1];
             }
+            this.conversations();
         },
         backToGame(){
             this.clickaudio();
@@ -343,14 +346,27 @@ new Vue({
             this.music.autoplay=true;
             console.log('music is on');
         },
+        conversations(){
+
+            console.log('conversation should begin now.');
+            /* this.conversation= new Audio();
+            this.conversation.src=this.sounds[0];
+            this.conversation.autoplay=true; */
+            var i = 0;
+                setInterval(() => {
+                    if(i<this.sounds.length){
+                        this.conversation= new Audio();
+                        this.conversation.src=this.sounds[i];
+                        this.conversation.autoplay=true;
+                        console.log(this.conversation.src);
+                    }
+                    i++;
+                }, 2500);
+            }
         },
         created(){
             setInterval(() => {
                 this.currentTime();
             }, 100);
-           /*  setTimeout(() => {
-                this.startmusic();    
-            }, 800); */
-        },
-        
+        }    
     })
