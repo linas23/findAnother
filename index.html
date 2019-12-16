@@ -58,8 +58,7 @@
                     </div>
                 </div>
                 <div class="selection" v-if="gameStart">
-                    <div class="box" v-bind:style="bindingStyle" v-for="(select,index) in selections" >
-                        <!-- v-bind:style="styleObject" -->
+                    <div class="box"  v-for="(select,index) in selections" >
                         <div class="choose" @click="selected(index)" :key="index">
                             <div>
                                 <li>{{select.toUpperCase()}}</li>
@@ -70,6 +69,7 @@
                 <div class="winner" v-else-if="winningScreen">
                     <span>
                         the winner is <br><div v-html="winner"> </div>
+                        <div v-if="startaftergamefinish"><button>start</button></div>
                     </span>
                 </div>
                 <div class="notvalid" v-else-if="notvalid">
@@ -113,7 +113,6 @@
                             <div class="selectedbox">
                                     <div class="chosenone">
                                             {{p2selection.toUpperCase()}}
-                                            <!-- <input type="text" v-model="p2selection"> -->
                                     </div>
                             </div>
                     </div>

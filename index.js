@@ -39,15 +39,19 @@ new Vue({
         musicfile:'https://www.televisiontunes.com/uploads/audio/Game%20of%20Thrones.mp3',
         clicksoundsrc:'/audio/click.mp3',
         GOT:true,
-        sounds:['/audio/1.mp3','/audio/2.mp3',,'','/audio/3.mp3','/audio/4.mp3','/audio/5.mp3','/audio/6.mp3','/audio/7.mp3','/audio/8.mp3'], 
+        sounds:['/audio/1.mp3','/audio/2.mp3','','','/audio/3.mp3','/audio/4.mp3','/audio/5.mp3','/audio/6.mp3','/audio/7.mp3','/audio/8.mp3'], 
         conversation:{},
         wrong:{},
         thatswrong:'/audio/thatswrong.mp3',
         right:{},
         thatsright:'/audio/thatsright.mp3',
+        startaftergamefinish:false,
         // visible:true,
         li:[],
-        bindingStyle:'',
+        /* bindingStyle:{
+            background:'orange',
+            opacity:''
+        }, */
        /*  styleObject: {
             color: 'red',
             fontSize: '13px',
@@ -188,6 +192,8 @@ new Vue({
                 opacity:1
             } */
             this.clickaudio();
+            // this.makeitvisible(index);
+
             // var selected = '';
             var clickedvalue=this.selections[index];
             if(this.p2active){
@@ -224,7 +230,7 @@ new Vue({
                     }else{
                         console.log('it is accepted.');
                         this.rightaudio();
-                        this.hide(this.toremove[0],this.toremove[1]);
+                        // this.hide(this.toremove[0],this.toremove[1]);
                         this.remainingBoxes -= 2;
                         this.p2points += 10;
                         this.removeitems();
@@ -247,12 +253,14 @@ new Vue({
                     this.p2array = [];
                     this.p2selection='';
                     this.p2turn=false;
-                    clickedvalue='';
+                    this.clickedvalue='';
                     this.p1active=true;
                     this.p1turn=true;
                     this.p2active=false;
                     this.toremove=[];
                 }
+
+                // this.hideforever();
             }  
             else{
                 // console.log(`p1 is active.`);
@@ -279,7 +287,7 @@ new Vue({
                     }else{
                         console.log('it is accepted.');
                         this.rightaudio();
-                        this.hide(this.toremove[0],this.toremove[1]);
+                        // this.hide(this.toremove[0],this.toremove[1]);
                         this.remainingBoxes -=2;
                         this.p1points += 10;
                         this.removeitems();
@@ -309,6 +317,7 @@ new Vue({
                     this.toremove=[];
                 }
                 // console.log(this.remainingBoxes);
+                // this.hideforever();
             }
         },
         validate(){
@@ -383,14 +392,24 @@ new Vue({
             this.conversation.autoplay=true; */
             var i = 0;
                 setInterval(() => {
-                    if(i<this.sounds.length){
-                        this.conversation= new Audio();
-                        this.conversation.src=this.sounds[i];
-                        this.conversation.autoplay=true;
-                        console.log(this.conversation.src);
-                    }
-                    i++;
-                }, 2500);
+                    
+                        if(i<this.sounds.length){
+                            this.conversation= new Audio();
+                            this.conversation.src=this.sounds[i];
+                            this.conversation.autoplay=true;
+                            console.log(this.conversation.src);
+                            console.log(i);
+                        } 
+                        
+                        i++;
+
+                        if(i>this.sounds.length){
+                            // if(i == this.sounds.length ){
+                                console.log('hello');
+                                this.startaftergamefinish=true;
+                            // }
+                        } 
+                    }, 2500);
             },
         rightaudio(){
             // that's right audio
@@ -398,17 +417,37 @@ new Vue({
             this.right.src=this.thatsright;
             this.right.play();
         },
-        hide(a,b){
+        /* hide(a,b){
             console.log(a);
             console.log(b);
             // console.log(this.li);
-            this.li.push(document.querySelectorAll(".box"));
+            // this.li.push(document.querySelectorAll(".box"));
             // console.log(this.li);
 
             // this.li[indexes[0]].style="background:inherit";
             // this.li[indexes[1]].style="background:inherit";
-        }
+
+            this.selections[a].style={
+                opacity:0.8
+            } */
         },
+        /* makeitvisible(index){
+            settimeout(() => {
+                this.selections[index].bindingStyle={
+                    background:'orange',
+                    opacity:'1'
+                }              
+            }, 20);
+            settimeout(() => {
+                this.selections[index].bindingStyle={
+                    background:'orange',
+                    opacity:'0'
+                }
+            }, 1000);
+        } */
+        /* hideforever(){
+            
+        } */
         created(){
             setInterval(() => {
                 this.currentTime();
