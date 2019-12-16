@@ -47,11 +47,14 @@ new Vue({
         thatsright:'/audio/thatsright.mp3',
         startaftergamefinish:false,
         // visible:true,
-        li:[],
-        /* bindingStyle:{
-            background:'orange',
-            opacity:''
-        }, */
+        list:[],
+        bindingStyle:{
+            'opacity':''
+        },
+        boxes:[],
+        list:[],
+        thisisdead:false
+
        /*  styleObject: {
             color: 'red',
             fontSize: '13px',
@@ -94,6 +97,7 @@ new Vue({
         },
         startGame(){
             this.clickaudio();
+            this.hideall();
             this.gameIsOn= false;
             this.gameStart = true;
             this.showhome=true;
@@ -139,10 +143,10 @@ new Vue({
             this.p2points=0;
             this.gameStart=false;
             this.p2turn=false;
-            this.startGame();
             this.remainingBoxes=20;
             this.showdetails=true;
             this.selectbox=true;
+            this.startGame();
             // setTimeout(() => {
                 // this.startTime();
                 // this.startms();
@@ -185,155 +189,165 @@ new Vue({
             }, 50);
         },
         selected(index){
-            // console.log(`the box no ${index} is visible now.`);
-            // this.totalclick = 0;
-
-            /* this.selections[index].style= {
-                opacity:1
-            } */
             this.clickaudio();
-            // this.makeitvisible(index);
-
-            // var selected = '';
+            this.makeitvisible(index);
             var clickedvalue=this.selections[index];
+
             if(this.p2active){
-                // console.log(`p2 is active.`);
-
-                if(this.totalclick==2){
-                    this.p2selection='';
-                    this.totalclick=0;
-                }
-
-                this.p1active=false;
-                this.p1selection='';
-                this.totalclick +=1;
-                this.p2selection = clickedvalue;
-                this.toremove.push(index);
-                // console.log(this.toremove);
-                // console.log(`removing index : ${this.toremove}`);
-
-                /* inserting the selected in the array */
-                // selected = this.selections[index];
-
-                this.p2array.push(clickedvalue);
-                // console.log(this.p2array);
-
-                if(this.p2array[0]===this.p2array[1]){
-                    // console.log('increasing points');
-                    if(this.validate()){
-                        console.log('not accepted.');
+                    // console.log(`p2 is active.`);
+                    if(this.selections[index]==' '){
                         this.gameStart=false;
-                        this.notvalid=true;
-                        this.p2array.pop();
-                        this.toremove.pop();
-                        this.totalclick=1;
-                    }else{
-                        console.log('it is accepted.');
-                        this.rightaudio();
-                        // this.hide(this.toremove[0],this.toremove[1]);
-                        this.remainingBoxes -= 2;
-                        this.p2points += 10;
-                        this.removeitems();
+                        this.thisisdead=true;
+                        this.totalclick -= 1;
+                        this.right.src='';
+                        this.wrong.src='';
                     }
-                }
-                if(this.p2array.length==2){
-                    console.log(this.p2array);
-                    if(this.p2array[0]!=this.p2array[1]){
-                        console.log(this.p2array);
-                        this.wrong = new Audio();
-                        this.wrong.src=this.thatswrong;
-                        this.wrong.play();
-                    }
-                }
-                this.gamefinish();
-                /* changing the turns */
-                if(this.totalclick==2){
-                    // console.log('total click is 2 now');
-                    this.totalclick=0;
-                    this.p2array = [];
-                    this.p2selection='';
-                    this.p2turn=false;
-                    this.clickedvalue='';
-                    this.p1active=true;
-                    this.p1turn=true;
-                    this.p2active=false;
-                    this.toremove=[];
-                }
+                    else{
+                        
+                    /* if(this.totalclick==2){
+                        this.p2selection='';
+                        this.totalclick=0;
+                    } */
 
-                // this.hideforever();
+                    this.p1active=false;
+                    this.p1selection='';
+                    this.totalclick +=1;
+                    this.p2selection = clickedvalue;
+                    this.toremove.push(index);
+                    this.p2array.push(clickedvalue);
+
+                    if(this.p2array[0]===this.p2array[1]){
+                        // both the selections are same
+                        if(this.validate()){
+                            //if the player has cheated
+                            console.log('not accepted.');
+                            this.gameStart=false;
+                            this.notvalid=true;
+                            this.p2array.pop();
+                            this.toremove.pop();
+                            this.totalclick -= 1;
+                        }else{
+                            //finally accepted
+                            console.log('it is accepted.');
+                            this.rightaudio();
+                            this.remainingBoxes -= 2;
+                            this.p2points += 10;
+                            this.removeitems(this.toremove);
+                            this.hideforever(this.toremove);
+                        }
+                    }
+                        
+                    if(this.p2array.length==2){
+                        if(this.p2array[0]!=this.p2array[1]){
+                            this.wrong = new Audio();
+                            this.wrong.src=this.thatswrong;
+                            this.wrong.play();
+                            // if both the selection are different
+                            console.log('hiding stuffs');
+                            this.hideAgain(this.toremove);
+                        }
+                    }
+
+                    this.gamefinish();
+                    /* changing the turns */
+                    if(this.totalclick==2){
+                        // console.log('total click is 2 now');
+                        this.totalclick=0;
+                        this.p2array = [];
+                        this.p2selection='';
+                        this.p2turn=false;
+                        this.clickedvalue='';
+                        this.p1active=true;
+                        this.p1turn=true;
+                        this.p2active=false;
+                        this.toremove=[];
+                    }
+                }   
             }  
             else{
-                // console.log(`p1 is active.`);
-                this.p2active=false;
-                this.totalclick +=1;
-                this.p1selection=clickedvalue;
-            
-                /* inserting the selected in the array */
-                // selected = this.selections[index];
-                this.p1array.push(clickedvalue);
-                // console.log(this.p1array);
-                this.toremove.push(index);
-                // console.log(this.toremove);
-
-                if(this.p1array[0]===this.p1array[1]){
-                    // console.log('increasing points');
-                    if(this.validate()){
-                        console.log('not accepted');
+                    // console.log(`p1 is active.`);
+                    if(this.selections[index]==' '){
                         this.gameStart=false;
-                        this.notvalid= true;
-                        this.p1array.pop();
-                        this.toremove.pop();
-                        this.totalclick = 1 ;
-                    }else{
-                        console.log('it is accepted.');
-                        this.rightaudio();
-                        // this.hide(this.toremove[0],this.toremove[1]);
-                        this.remainingBoxes -=2;
-                        this.p1points += 10;
-                        this.removeitems();
+                        this.thisisdead=true;
+                        this.totalclick -= 1;
+                        this.right.src='';
+                        this.wrong.src='';
+                    }
+                    else{
+
+                    this.p2active=false;
+                    this.totalclick +=1;
+                    this.p1selection=clickedvalue;
+                    /* if(this.totalclick==2){
+                        this.p1selection='';
+                        this.totalclick=0;
+                    } */
+                    this.p1array.push(clickedvalue);
+                    this.toremove.push(index);
+
+                    if(this.p1array[0]===this.p1array[1]){
+                        if(this.validate()){
+                            console.log('not accepted');
+                            this.gameStart=false;
+                            this.notvalid= true;
+                            this.p1array.pop();
+                            this.toremove.pop();
+                            this.totalclick -= 1 ;
+                        }else{
+                            console.log('it is accepted.');
+                            this.rightaudio();
+                            this.remainingBoxes -=2;
+                            this.p1points += 10;
+                            this.removeitems(this.toremove);
+                            this.hideforever(this.toremove);
+                        }
+                    }
+                    
+                    if(this.p1array.length==2){
+                        if(this.p1array[0]!=this.p1array[1]){
+                            this.wrong = new Audio();
+                            this.wrong.src=this.thatswrong;
+                            this.wrong.play();
+                            // if both the selection are different
+                            console.log('hiding stuffs');
+                            this.hideAgain(this.toremove);
+                        }
+                    }
+                    this.gamefinish();
+                    /* changing the turns */
+                    if(this.totalclick==2){
+                        // console.log('total click is 2 now');
+                        // checking whether both selection are equal or not
+                        // console.log('it never reached here.');
+                        this.totalclick=0;
+                        this.p1array=[];
+                        this.p1selection='';
+                        clickedvalue='';
+                        this.p1turn=false;
+                        this.p2active=true;
+                        this.p2turn=true;
+                        this.p1active=false;
+                        this.toremove=[];
                     }
                 }
-                if(this.p1array.length==2){
-                    if(this.p1array[0]!=this.p1array[1]){
-                        this.wrong = new Audio();
-                        this.wrong.src=this.thatswrong;
-                        this.wrong.play();
-                    }
-                }
-                this.gamefinish();
-                /* changing the turns */
-                if(this.totalclick==2){
-                    // console.log('total click is 2 now');
-                    // checking whether both selection are equal or not
-                    // console.log('it never reached here.');
-                    this.totalclick=0;
-                    this.p1array=[];
-                    this.p1selection='';
-                    clickedvalue='';
-                    this.p1turn=false;
-                    this.p2active=true;
-                    this.p2turn=true;
-                    this.p1active=false;
-                    this.toremove=[];
-                }
-                // console.log(this.remainingBoxes);
-                // this.hideforever();
             }
         },
         validate(){
             return this.toremove[0]===this.toremove[1];
         },
-        removeitems(){
+        removeitems(indexes){
             // console.log(this.toremove);
-            this.toremove.sort((a,b)=> b - a);
-            console.log(this.toremove);
-            for(var i = 0; i<this.toremove.length ; i++){
+            Array.from(indexes).sort((a,b)=> b - a);
+            // console.log(this.indexes);
+            for(var i = 0; i<indexes.length ; i++){
                 // console.log(`removing index ${this.toremove[i]}`);
                 // console.log(this.selections);
                 // this.selections.splice(this.toremove[i],1);
-                this.selections[this.toremove[i]]= ' ';
+                this.selections[indexes[i]]= ' ';
                 // console.log(this.selections);
+                console.log(`removing${indexes[i]}`);
             }
+
         },
         showWinner(){
             this.gameStart=false;
@@ -349,12 +363,19 @@ new Vue({
             }else{
                 this.winner= this.names[1];
             }
+            
+            setTimeout(()=>{
+                this.startaftergamefinish=true;
+                console.log('show start');
+            },5000);
+            
             this.conversations();
         },
         backToGame(){
             this.clickaudio();
             this.notvalid=false;
             this.gameStart=true;
+            this.thisisdead=false;
         },
         gamefinish(){
             if(this.remainingBoxes == 0){
@@ -387,28 +408,16 @@ new Vue({
         },
         conversations(){
             console.log('conversation should begin now.');
-            /* this.conversation= new Audio();
-            this.conversation.src=this.sounds[0];
-            this.conversation.autoplay=true; */
             var i = 0;
-                setInterval(() => {
-                    
+                setInterval(() => {       
                         if(i<this.sounds.length){
                             this.conversation= new Audio();
                             this.conversation.src=this.sounds[i];
                             this.conversation.autoplay=true;
                             console.log(this.conversation.src);
                             console.log(i);
-                        } 
-                        
+                        }  
                         i++;
-
-                        if(i>this.sounds.length){
-                            // if(i == this.sounds.length ){
-                                console.log('hello');
-                                this.startaftergamefinish=true;
-                            // }
-                        } 
                     }, 2500);
             },
         rightaudio(){
@@ -417,37 +426,43 @@ new Vue({
             this.right.src=this.thatsright;
             this.right.play();
         },
-        /* hide(a,b){
-            console.log(a);
-            console.log(b);
-            // console.log(this.li);
-            // this.li.push(document.querySelectorAll(".box"));
-            // console.log(this.li);
-
-            // this.li[indexes[0]].style="background:inherit";
-            // this.li[indexes[1]].style="background:inherit";
-
-            this.selections[a].style={
-                opacity:0.8
-            } */
+        hideall(){
+            console.log('hiding all');
+            this.bindingStyle.opacity=0.2;
+            // console.log(this.bindingStyle);
         },
-        /* makeitvisible(index){
-            settimeout(() => {
-                this.selections[index].bindingStyle={
-                    background:'orange',
-                    opacity:'1'
-                }              
-            }, 20);
-            settimeout(() => {
-                this.selections[index].bindingStyle={
-                    background:'orange',
-                    opacity:'0'
-                }
-            }, 1000);
-        } */
-        /* hideforever(){
-            
-        } */
+        makeitvisible(index){
+            /* console.log('making the box visible');
+            console.log('visible innertext'); */
+            /* Array.from(boxes).forEach(element=>{
+                console.log(element);
+            }); */
+            this.boxes = document.getElementsByClassName('box');
+            // console.log(this.boxes);
+            // Array.from(this.boxes)[index].style="background:black";
+
+            this.list = document.getElementsByTagName('li');
+            // console.log(this.list);
+            Array.from(this.list)[index].style="opacity:1";
+
+        },
+        hideforever(toremove){
+            /* console.log(toremove);
+            console.log(this.list);
+            console.log(this.boxes); */
+            Array.from(toremove).forEach(element => {
+                this.boxes[element].style="background:blue";
+                this.list[element].style="opacity:0.2";
+                });
+        },
+        hideAgain(toremove){
+            // console.log(toremove);
+            Array.from(toremove).forEach(el=>{
+                this.boxes[el].style="background:green";
+                this.list[el].style="opacity:0.2";
+            });
+        }
+        },
         created(){
             setInterval(() => {
                 this.currentTime();

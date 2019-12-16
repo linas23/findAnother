@@ -119,9 +119,12 @@ body{
 .box .choose:hover{
     cursor: pointer;
 }
+.selectedbox{
+    background: black;
+    color: white;
+}
 .selectedbox .chosenone{
     font-family: 'Press Start 2P', cursive;
-    color: black;
     font-size: 2rem;
     padding-top: 125px;
     letter-spacing: 0.3rem;
@@ -183,6 +186,7 @@ body{
 }
 li{
     list-style-type: none;
+    color: white;
 }
 .musicbutton button{
     width: 125px;
@@ -191,4 +195,13 @@ li{
     background: inherit;
     color: white;
     box-shadow: 3px 4px black;
+}
+.winner button{
+    width: 100px;
+    height: 33px;
+    background: inherit;
+    color: white;
+    font-family: inherit;
+    text-transform: uppercase;
+    font-size: 1.3rem;
 }
