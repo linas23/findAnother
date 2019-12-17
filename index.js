@@ -6,7 +6,7 @@ new Vue({
         showhome:false,
         showdetails:false,
         names:['linas','urshala'],
-        selectfrom:['apple','mango','family','dog','cat','black tea','friends','love','hate','money'],
+        selectfrom:['Newton','Ellen','Einstien','pink floyd','luffy','rez','friends','love','hate','life'],
         arr1:[],
         arr2:[],
         selections:[],
@@ -53,7 +53,8 @@ new Vue({
         },
         boxes:[],
         list:[],
-        thisisdead:false
+        thisisdead:false,
+        gameisdraw:false,
 
        /*  styleObject: {
             color: 'red',
@@ -192,7 +193,7 @@ new Vue({
             this.clickaudio();
             this.makeitvisible(index);
             var clickedvalue=this.selections[index];
-
+            this.totalclick +=1;
             if(this.p2active){
                     // console.log(`p2 is active.`);
                     if(this.selections[index]==' '){
@@ -211,10 +212,20 @@ new Vue({
 
                     this.p1active=false;
                     this.p1selection='';
-                    this.totalclick +=1;
                     this.p2selection = clickedvalue;
                     this.toremove.push(index);
                     this.p2array.push(clickedvalue);
+
+                    if(this.p2array.length==2){
+                        if(this.p2array[0]!=this.p2array[1]){
+                            this.wrong = new Audio();
+                            this.wrong.src=this.thatswrong;
+                            this.wrong.play();
+                            // if both the selection are different
+                            console.log('hiding stuffs');
+                            this.hideAgain(this.toremove);
+                        }
+                    }
 
                     if(this.p2array[0]===this.p2array[1]){
                         // both the selections are same
@@ -237,16 +248,7 @@ new Vue({
                         }
                     }
                         
-                    if(this.p2array.length==2){
-                        if(this.p2array[0]!=this.p2array[1]){
-                            this.wrong = new Audio();
-                            this.wrong.src=this.thatswrong;
-                            this.wrong.play();
-                            // if both the selection are different
-                            console.log('hiding stuffs');
-                            this.hideAgain(this.toremove);
-                        }
-                    }
+                    
 
                     this.gamefinish();
                     /* changing the turns */
@@ -265,18 +267,18 @@ new Vue({
                 }   
             }  
             else{
-                    // console.log(`p1 is active.`);
-                    if(this.selections[index]==' '){
-                        this.gameStart=false;
-                        this.thisisdead=true;
-                        this.totalclick -= 1;
-                        this.right.src='';
-                        this.wrong.src='';
-                    }
-                    else{
+                
+                if(this.selections[index]==' '){
+                    this.gameStart=false;
+                    this.thisisdead=true;
+                    this.totalclick -= 1;
+                    this.right.src='';
+                    this.wrong.src='';
+                }
+                else{
+                    // this.totalclick +=1;
 
                     this.p2active=false;
-                    this.totalclick +=1;
                     this.p1selection=clickedvalue;
                     /* if(this.totalclick==2){
                         this.p1selection='';
@@ -284,6 +286,17 @@ new Vue({
                     } */
                     this.p1array.push(clickedvalue);
                     this.toremove.push(index);
+
+                    if(this.p1array.length==2){
+                        if(this.p1array[0]!=this.p1array[1]){
+                            this.wrong = new Audio();
+                            this.wrong.src=this.thatswrong;
+                            this.wrong.play();
+                            // if both the selection are different
+                            // console.log('hiding stuffs');
+                            this.hideAgain(this.toremove);
+                        }
+                    }
 
                     if(this.p1array[0]===this.p1array[1]){
                         if(this.validate()){
@@ -303,16 +316,7 @@ new Vue({
                         }
                     }
                     
-                    if(this.p1array.length==2){
-                        if(this.p1array[0]!=this.p1array[1]){
-                            this.wrong = new Audio();
-                            this.wrong.src=this.thatswrong;
-                            this.wrong.play();
-                            // if both the selection are different
-                            console.log('hiding stuffs');
-                            this.hideAgain(this.toremove);
-                        }
-                    }
+                    
                     this.gamefinish();
                     /* changing the turns */
                     if(this.totalclick==2){
@@ -350,32 +354,37 @@ new Vue({
 
         },
         showWinner(){
-            this.gameStart=false;
-            this.selectbox=false;
-            this.winningScreen= true;
             var p1 = this.p1points;
             var p2 = this.p2points;
 
-            console.log(p1);
-            console.log(p2);
-            if(p1>p2){
-                this.winner = this.names[0];
+            if(p1==p2){
+                this.gameisdraw=true;
+                this.gameStart=false;
+                this.selectbox=false;
             }else{
-                this.winner= this.names[1];
-            }
-            
-            setTimeout(()=>{
+                this.gameStart=false;
+                this.selectbox=false;
+                this.winningScreen= true;
+
+                if(p1>p2){
+                    this.winner = this.names[0];
+                }else{
+                    this.winner= this.names[1];
+                }
+                
                 this.startaftergamefinish=true;
-                console.log('show start');
-            },5000);
-            
-            this.conversations();
+                    
+                
+                this.conversations();
+            }
         },
         backToGame(){
             this.clickaudio();
-            this.notvalid=false;
             this.gameStart=true;
+            this.notvalid=false;
             this.thisisdead=false;
+            // this.gameisdraw=false;
+            // this.winningScreen=false;
         },
         gamefinish(){
             if(this.remainingBoxes == 0){
@@ -428,7 +437,7 @@ new Vue({
         },
         hideall(){
             console.log('hiding all');
-            this.bindingStyle.opacity=0.2;
+            this.bindingStyle.opacity=0;
             // console.log(this.bindingStyle);
         },
         makeitvisible(index){
@@ -452,14 +461,14 @@ new Vue({
             console.log(this.boxes); */
             Array.from(toremove).forEach(element => {
                 this.boxes[element].style="background:blue";
-                this.list[element].style="opacity:0.2";
+                this.list[element].style="opacity:0";
                 });
         },
         hideAgain(toremove){
             // console.log(toremove);
             Array.from(toremove).forEach(el=>{
                 this.boxes[el].style="background:green";
-                this.list[el].style="opacity:0.2";
+                this.list[el].style="opacity:0";
             });
         }
         },

@@ -151,7 +151,7 @@ body{
     padding: 0;
     text-align: center;
 }
-.winner{
+.winner, .gamedraw{
     font-size: 2.3rem;
     font-family: 'Press Start 2P', cursive;
     text-align: center;
@@ -196,12 +196,12 @@ li{
     color: white;
     box-shadow: 3px 4px black;
 }
-.winner button{
-    width: 100px;
+.winner button, .gamedraw button{
+    width: 200px;
     height: 33px;
     background: inherit;
     color: white;
     font-family: inherit;
     text-transform: uppercase;
-    font-size: 1.3rem;
+    font-size: 1rem;
 }

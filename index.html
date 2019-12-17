@@ -69,11 +69,17 @@
                     `       This one is already dead
                     <button @click="backToGame">Back to Game</button>
                 </span></div>
+                <div class="gamedraw" v-else-if="gameisdraw">
+                    <span>
+                        You have to play one more time in order to get the winner. <br>
+                    </span>
+                    <button @click="restartGame">Start Again</button>
+                </div>
                 <div class="winner" v-else-if="winningScreen">
                     <span>
                         the winner is <br><div v-html="winner"> </div>
-                        <button @click="startGame">start</button>
                     </span>
+                    <button @click="startGame">start again</button>
                 </div>
                 <div class="notvalid" v-else-if="notvalid">
                     You are trying to cheat in this game. <br>
