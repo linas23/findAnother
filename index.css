@@ -153,7 +153,8 @@ body{
 }
 .winner, .gamedraw{
     font-size: 2.3rem;
-    font-family: 'Press Start 2P', cursive;
+    /* font-family: 'Press Start 2P', cursive; */
+    font-family: 'Lakki Reddy', cursive;
     text-align: center;
     text-transform: uppercase;
     background: inherit;
@@ -165,7 +166,7 @@ body{
     text-decoration: underline;
     text-decoration-style: wavy ;
 }
-.notvalid{
+.notvalid,.dead{
     margin: 0 auto;
     width: 75%;
     text-align: center;
@@ -173,9 +174,8 @@ body{
     font-size: 2rem;
     font-family: 'Lakki Reddy', cursive;
     color: white;
-
 }
-.notvalid button{
+.notvalid button, .dead button{
     font-family: 'Lakki Reddy', cursive;
     width: 150px;
     height: 30px;

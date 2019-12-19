@@ -39,7 +39,7 @@ new Vue({
         musicfile:'https://www.televisiontunes.com/uploads/audio/Game%20of%20Thrones.mp3',
         clicksoundsrc:'audio/click.mp3',
         GOT:true,
-        sounds:['/audio/1.mp3','/audio/2.mp3','','','/audio/3.mp3','/audio/4.mp3','/audio/5.mp3','/audio/6.mp3','/audio/7.mp3','/audio/8.mp3'], 
+        sounds:['audio/1.mp3','audio/2.mp3','','','audio/3.mp3','audio/4.mp3','audio/5.mp3','audio/6.mp3','audio/7.mp3','audio/8.mp3'], 
         conversation:{},
         wrong:{},
         thatswrong:'audio/thatswrong.mp3',
