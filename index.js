@@ -42,9 +42,9 @@ new Vue({
         sounds:['/audio/1.mp3','/audio/2.mp3','','','/audio/3.mp3','/audio/4.mp3','/audio/5.mp3','/audio/6.mp3','/audio/7.mp3','/audio/8.mp3'], 
         conversation:{},
         wrong:{},
-        thatswrong:'/audio/thatswrong.mp3',
+        thatswrong:'audio/thatswrong.mp3',
         right:{},
-        thatsright:'/audio/thatsright.mp3',
+        thatsright:'audio/thatsright.mp3',
         startaftergamefinish:false,
         // visible:true,
         list:[],
@@ -437,7 +437,7 @@ new Vue({
         },
         hideall(){
             console.log('hiding all');
-            this.bindingStyle.opacity=0;
+            this.bindingStyle.opacity=0.2;
             // console.log(this.bindingStyle);
         },
         makeitvisible(index){
