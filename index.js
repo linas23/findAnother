@@ -46,22 +46,16 @@ new Vue({
         right:{},
         thatsright:'audio/thatsright.mp3',
         startaftergamefinish:false,
-        // visible:true,
         list:[],
         bindingStyle:{
-            'opacity':''
+            'opacity':'',
+            'background':''
         },
         boxes:[],
         thisisdead:false,
         gameisdraw:false,
         playonemoretime:'audio/onemoretime.mp3',
         newAudio:{},
-       /*  styleObject: {
-            color: 'red',
-            fontSize: '13px',
-            opacity:0
-        } */
-
     },
     methods:{
         form1(){
@@ -147,6 +141,7 @@ new Vue({
             this.remainingBoxes=20;
             this.showdetails=true;
             this.selectbox=true;
+            // this.hideall();
             this.startGame();
         },
         currentTime(){
@@ -343,7 +338,7 @@ new Vue({
                 // console.log(`removing index ${this.toremove[i]}`);
                 // console.log(this.selections);
                 // this.selections.splice(this.toremove[i],1);
-                this.selections[indexes[i]]= ' ';
+                this.selections[indexes[i]]= '';
                 // console.log(this.selections);
                 console.log(`removing${indexes[i]}`);
             }
@@ -371,8 +366,6 @@ new Vue({
                 }
                 
                 this.startaftergamefinish=true;
-                    
-                
                 this.conversations();
             }
         },
@@ -442,7 +435,10 @@ new Vue({
         },
         hideall(){
             console.log('hiding all');
-            this.bindingStyle.opacity=0.2;
+            setTimeout(()=>{
+                this.bindingStyle.opacity=0;
+                this.bindingStyle.background='';
+            },1500);
             // console.log(this.bindingStyle);
         },
         makeitvisible(index){
@@ -465,14 +461,15 @@ new Vue({
             console.log(this.list);
             console.log(this.boxes); */
             Array.from(toremove).forEach(element => {
-                this.boxes[element].style="background:blue";
-                this.list[element].style="opacity:0";
+                this.boxes[element].style="background:black";
+                this.list[element].style="opacity:1";
+                this.list[element].style="color:white";
                 });
         },
         hideAgain(toremove){
             // console.log(toremove);
             Array.from(toremove).forEach(el=>{
-                this.boxes[el].style="background:green";
+                // this.boxes[el].style="background:green"; 
                 this.list[el].style="opacity:0";
             });
         }
