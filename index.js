@@ -37,7 +37,7 @@ new Vue({
         remainingBoxes:20,
         music:{},
         musicfile:'https://www.televisiontunes.com/uploads/audio/Game%20of%20Thrones.mp3',
-        clicksoundsrc:'/audio/click.mp3',
+        clicksoundsrc:'audio/click.mp3',
         GOT:true,
         sounds:['/audio/1.mp3','/audio/2.mp3','','','/audio/3.mp3','/audio/4.mp3','/audio/5.mp3','/audio/6.mp3','/audio/7.mp3','/audio/8.mp3'], 
         conversation:{},
@@ -52,10 +52,10 @@ new Vue({
             'opacity':''
         },
         boxes:[],
-        list:[],
         thisisdead:false,
         gameisdraw:false,
-
+        playonemoretime:'audio/onemoretime.mp3',
+        newAudio:{},
        /*  styleObject: {
             color: 'red',
             fontSize: '13px',
@@ -106,6 +106,7 @@ new Vue({
             this.p1turn=true;
             this.p1active=true;
             this.showchangename=false;
+            this.gameisdraw=false;
             this.startTime();
             this.startms();
             // console.log('game started');
@@ -139,7 +140,6 @@ new Vue({
             this.arr1=[];
             this.arr2=[];
             this.selections=[];
-            // this.p1active=false;
             this.p1points=0;
             this.p2points=0;
             this.gameStart=false;
@@ -148,10 +148,6 @@ new Vue({
             this.showdetails=true;
             this.selectbox=true;
             this.startGame();
-            // setTimeout(() => {
-                // this.startTime();
-                // this.startms();
-            // }, 100);
         },
         currentTime(){
             var date = new Date();
@@ -361,7 +357,9 @@ new Vue({
                 this.gameisdraw=true;
                 this.gameStart=false;
                 this.selectbox=false;
+                this.playonemoretimeaudio();
             }else{
+                this.gameisdraw=false;
                 this.gameStart=false;
                 this.selectbox=false;
                 this.winningScreen= true;
@@ -434,6 +432,13 @@ new Vue({
             this.right=new Audio();
             this.right.src=this.thatsright;
             this.right.play();
+        },
+        playonemoretimeaudio(){
+            this.newAudio= new Audio();
+            this.newAudio.src= this.playonemoretime;
+            setTimeout(()=>{
+                this.newAudio.play();
+            },1200);
         },
         hideall(){
             console.log('hiding all');
